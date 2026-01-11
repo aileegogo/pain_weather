@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  location: MyString
+  pressure: 1
+  humidity: 1
+  temp: 1.5
+  pain_level: 1
+  ai_content: MyText
+
+two:
+  location: MyString
+  pressure: 1
+  humidity: 1
+  temp: 1.5
+  pain_level: 1
+  ai_content: MyText
