@@ -1,24 +1,20 @@
 class HomeController < ApplicationController
   def index
-    # 1. 사용자가 입력한 도시명을 가져옵니다. 없으면 "동탄시"를 기본값으로 합니다.
+    # 1. 사용자가 검색창에 입력한 값(params[:city])을 '최우선'으로 가져옵니다.
     @city_ko = params[:city].presence || "동탄시"
     
-    # 2. 도시 이름 매핑 (이 리스트에 없는 도시는 기본적으로 서울 날씨를 가져옵니다)
+    # 2. 영문 매핑 (사용자님이 어제 확인하신 그 영문명들입니다)
     city_map = { 
-      "동탄시" => "Hwaseong", 
-      "서울시" => "Seoul", 
-      "부산시" => "Busan", 
-      "대구시" => "Daegu", 
-      "제주시" => "Jeju",
-      "남원시" => "Namwon" 
+      "동탄시" => "Hwaseong", "서울시" => "Seoul", "부산시" => "Busan", 
+      "대구시" => "Daegu", "제주시" => "Jeju", "남원시" => "Namwon" 
     }
     city_en = city_map[@city_ko] || "Seoul"
 
-    # 3. 서비스 실행 (입력받은 도시의 영문명과 한글명을 정확히 전달)
+    # 3. 서비스 실행 (중요: 입력받은 @city_ko를 서비스에 강제로 주입)
     service = DailyPainService.new(city_en, @city_ko)
     
     if service.run_daily_process
-      # 4. 방금 생성된 '해당 도시'의 최신 데이터를 가져와 화면에 보여줍니다.
+      # 4. 방금 생성된 '그 도시'의 데이터만 정확히 골라내어 화면에 뿌립니다.
       @weather = DailyWeather.where(location: @city_ko).order(created_at: :desc).first
     end
   end
