@@ -10,7 +10,7 @@ class DailyPainService
     weather_data = fetch_weather
     return false unless weather_data
 
-    # GPT에게 실제 API로 가져온 날씨 수치를 전달합니다.
+    # GPT에게 실제 API 데이터를 전달
     prompt = <<~TEXT
       너는 기상병 전문의이자 파워 블로거야. 
       #{@city_ko}의 현재 날씨(기온 #{weather_data[:temp]}도, 기압 #{weather_data[:pressure]}hPa)를 분석하여 상세한 건강 리포트를 작성해줘.
@@ -26,7 +26,7 @@ class DailyPainService
     
     ai_content = res.dig("choices", 0, "message", "content")
 
-    # DB에 실제 API 수치를 저장합니다. (고정값 1026, -10.2 대신 weather_data 사용)
+    # DB에 실제 API 수치를 저장
     DailyWeather.create!(
       location: @city_ko,
       pressure: weather_data[:pressure],
@@ -56,5 +56,3 @@ class DailyPainService
     end
   end
 end
-
-# [주의] 이 줄 아래에 있던 weather_data = { ... } 선언은 반드시 삭제하세요!
