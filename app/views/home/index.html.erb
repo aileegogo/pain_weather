@@ -42,7 +42,8 @@
         <span style="background: #ede9fe; padding: 8px; border-radius: 12px;">🧠</span> AI 전문 분석가 소견
       </h3>
       <div style="line-height: 1.8; color: #334155; font-size: 1.05rem; background: #f1f5f9; padding: 25px; border-radius: 16px; border-left: 4px solid #8b5cf6;">
-       <%= @weather.description %>
+       <%# 기존 @weather.description 부분을 아래 코드로 교체 %>
+       <%= @weather.try(:ai_report) || @weather.try(:content) || @weather.try(:description) || @weather.try(:report) || "리포트 데이터를 구성 중입니다. 잠시만 기다려 주세요." %>
       </div>
     </section>
 
