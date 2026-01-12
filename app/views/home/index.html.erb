@@ -1,142 +1,39 @@
-<script src="https://cdn.tailwindcss.com"></script>
+<div style="margin-bottom: 30px; text-align: center;">
+  <form action="/" method="get" style="display: flex; justify-content: center; gap: 10px;">
+    
+    <input type="text" name="city" placeholder="도시명을 입력하세요 (예: 속초시)" value="<%= @city_ko %>"
+           style="padding: 12px 20px; border-radius: 30px; border: 2px solid #ccebd7; background-color: #f0f9f4; width: 60%; font-size: 1rem; outline: none; transition: border-color 0.3s;">
 
-<div class="min-h-screen bg-slate-50 font-sans text-slate-900 pb-20">
-  <nav class="bg-blue-600 shadow-lg sticky top-0 z-50 px-6 py-4">
-    <div class="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-      <h1 class="text-2xl font-black text-white italic tracking-tighter cursor-pointer" onclick="location.href='/'">DR. WEATHER</h1>
-      <form action="/" method="get" data-turbo="false" class="relative w-full md:w-[450px]">
-        <input type="text" name="city" placeholder="지역명을 입력하세요 (예: 서울, 원주)" 
-               class="w-full pl-12 pr-24 py-2.5 rounded-xl border-none shadow-inner outline-none font-bold text-base text-slate-800"
-               value="<%= @city_input %>">
-        <button type="submit" class="absolute right-1.5 top-1.5 bg-blue-800 text-white px-5 py-1.5 rounded-lg font-black text-sm hover:bg-black transition-all">검색</button>
-      </form>
-    </div>
-  </nav>
-
-  <main class="max-w-[1200px] mx-auto px-6 py-10">
-    <div class="mb-10 w-full h-24 bg-white rounded-2xl border-2 border-dashed border-slate-200 flex items-center justify-center text-slate-400 font-bold shadow-sm">
-      ADVERTISEMENT (TOP BANNER)
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-      
-      <div class="lg:col-span-4 space-y-8">
-        <div class="bg-white rounded-[2.5rem] shadow-2xl border border-white overflow-hidden text-center transition-all hover:scale-[1.01]">
-          <% status = case @weather&.pain_level
-                     when 3 then { icon: "🚨", label: "위험", color: "text-red-600", bg: "bg-red-50" }
-                     when 2 then { icon: "⚠️", label: "주의", color: "text-amber-600", bg: "bg-amber-50" }
-                     else { icon: "✅", label: "양호", color: "text-emerald-600", bg: "bg-emerald-50" }
-                     end %>
-          <div class="<%= status[:bg] %> py-12 border-b">
-            <p class="text-blue-800 font-black text-xl mb-4 italic">📍 <%= @city_input %> 예보</p>
-            <div class="text-[100px] leading-none mb-6 drop-shadow-xl"><%= status[:icon] %></div>
-            <h2 class="text-5xl font-black <%= status[:color] %> tracking-tight"><%= status[:label] %></h2>
-          </div>
-          
-          <div class="grid grid-cols-3 divide-x border-t bg-white h-32 items-center font-black text-slate-800">
-            <div><p class="text-[10px] text-slate-400 mb-2 uppercase font-bold">기압</p><p class="text-xl"><%= @weather&.pressure || "측정 중" %></p></div>
-            <div><p class="text-[10px] text-slate-400 mb-2 uppercase font-bold">습도</p><p class="text-xl"><%= @weather&.humidity ? "#{@weather.humidity}%" : "로딩 중" %></p></div>
-            <div><p class="text-[10px] text-slate-400 mb-2 uppercase font-bold">기온</p><p class="text-xl"><%= @weather&.temp ? "#{@weather.temp}°" : "확인 중" %></p></div>
-          </div>
-        </div>
-
-        <div class="space-y-4">
-          <div class="bg-white p-6 rounded-3xl flex items-center gap-6 border shadow-xl">
-            <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl">☕</div>
-            <div><p class="text-xs text-blue-500 font-black mb-1 font-bold italic">추천 차</p><p class="text-lg font-black text-slate-800">따뜻한 생강차</p></div>
-          </div>
-          <div class="bg-white p-6 rounded-3xl border-2 border-dashed border-slate-200 flex items-center justify-center text-slate-400 font-bold h-40 italic shadow-sm">
-            SIDEBAR AD
-          </div>
-        </div>
-      </div>
-
-      <div class="lg:col-span-8 space-y-10">
-        <div class="bg-white rounded-[3rem] p-10 shadow-2xl border relative">
-          <h3 class="text-xl font-black text-slate-800 mb-8 flex items-center gap-3 italic"><span class="w-2 h-7 bg-blue-600 rounded-full shadow-md"></span>WEEKLY PRESSURE</h3>
-          <div class="h-[350px] w-full">
-            <canvas id="weatherChart"></canvas>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-[3rem] p-12 shadow-2xl border relative overflow-hidden min-h-[600px]">
-          <div class="absolute top-0 left-0 w-2 h-full bg-blue-600 shadow-lg"></div>
-          <div class="flex items-center gap-6 mb-10 border-b pb-8">
-            <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-3xl text-white font-bold shadow-xl">🩺</div>
-            <h2 class="text-3xl font-black text-slate-800 tracking-tighter font-bold italic">AI 정밀 분석 처방</h2>
-          </div>
-          
-          <div class="prose prose-xl max-w-none text-slate-700 font-bold leading-relaxed whitespace-pre-wrap mb-10">
-            <%= @weather&.ai_content || "데이터를 분석하여 리포트를 작성하고 있습니다. 약 10초 정도 소요됩니다..." %>
-          </div>
-
-          <div class="mt-12 pt-10 border-t border-slate-100 text-center">
-            <p class="text-xs text-blue-500 mb-6 font-black uppercase tracking-widest italic font-bold">Featured Recommendation</p>
-            <div class="bg-slate-50 p-8 rounded-[2.5rem] border-2 border-dashed border-slate-200 text-slate-400 font-black italic">
-              COUPANG PARTNERS BANNER
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-  </main>
+    <button type="submit" class="search-btn">
+      검색하기
+    </button>
+  </form>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  (function() {
-    function initChart() {
-      const canvas = document.getElementById('weatherChart');
-      if (!canvas) return;
-      if (window.myChart) window.myChart.destroy();
+<style>
+  .search-btn {
+    padding: 12px 25px; 
+    border-radius: 30px; 
+    border: none; 
+    background-color: #4CAF50; /* 기본 초록색 */
+    color: white; 
+    font-weight: bold; 
+    cursor: pointer; 
+    transition: background-color 0.2s;
+  }
+  
+  /* 마우스를 올렸을 때와 클릭했을 때 오렌지색으로 변경 */
+  .search-btn:hover, .search-btn:active {
+    background-color: #FF9800; /* 오렌지색 */
+  }
+</style>
 
-      // 컨트롤러 데이터 로드
-      const labels = <%= raw (@weekly_data || []).map { |d| d.created_at.strftime("%H:%M") }.to_json %>;
-      const dataValues = <%= (@weekly_data || []).map(&:pressure).to_json %>;
-
-      if (dataValues.length === 0) return;
-
-      window.myChart = new Chart(canvas.getContext('2d'), {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: '기압(hPa)',
-            data: dataValues,
-            borderColor: '#2563eb',
-            borderWidth: 5,
-            pointRadius: 6,
-            pointHoverRadius: 10,
-            pointBackgroundColor: '#fff',
-            pointHoverBackgroundColor: '#2563eb',
-            fill: true,
-            backgroundColor: 'rgba(37, 99, 235, 0.08)',
-            tension: 0.4
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          interaction: { mode: 'index', intersect: false },
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              enabled: true,
-              backgroundColor: 'rgba(15, 23, 42, 0.9)',
-              padding: 12,
-              displayColors: false,
-              callbacks: { label: function(context) { return context.parsed.y + ' hPa'; } }
-            }
-          },
-          scales: {
-            x: { grid: { display: false }, ticks: { font: { weight: 'bold' } } },
-            y: { grid: { color: '#f1f5f9' }, ticks: { font: { weight: 'bold' } } }
-          }
-        }
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", initChart);
-    document.addEventListener("turbo:load", initChart);
-  })();
-</script>
+<div style="margin-top: 40px; text-align: center;">
+  <div style="display: inline-flex; align-items: center; background: #e6f4ea; color: #1e8e3e; padding: 10px 20px; border-radius: 50px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+    <span style="margin-right: 8px;">✅</span>
+    <span>AI 분석이 완료되었습니다</span>
+  </div>
+  <p style="font-size: 0.8rem; color: #999; margin-top: 10px;">
+    최종 갱신: <%= @weather.created_at.strftime("%H:%M") %> (실시간 데이터 기반)
+  </p>
+</div>
