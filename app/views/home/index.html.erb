@@ -60,20 +60,55 @@
         </div>
       <% end %>
     </section>
-  <footer style="display: block !important; clear: both !important; width: 100% !important; float: none !important; margin-top: 80px !important; padding: 40px 0 !important; border-top: 1px solid #eee !important; background-color: #f9f9f9 !important; text-align: center !important;">
+ <footer style="clear: both; width: 100%; margin-top: 60px; padding: 30px 0; border-top: 1px solid #eee; background-color: #f9f9f9; text-align: center;">
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+    <div style="margin-bottom: 10px;">
+      <a href="javascript:void(0);" onclick="showModal('service')" style="text-decoration: none; color: #666; font-size: 14px; margin: 0 10px;">서비스 소개</a>
+      <span style="color: #ccc;">|</span>
+      <a href="javascript:void(0);" onclick="showModal('privacy')" style="text-decoration: none; color: #666; font-size: 14px; margin: 0 10px;">개인정보처리방침</a>
+    </div>
+    <p style="color: #999; font-size: 12px; margin: 0;">© 2026 oneclipai.info. All rights reserved.</p>
+  </div>
+</footer>
 
-<div style="display: block !important; width: 100% !important; text-align: center !important;">
-
-<div style="margin-bottom: 15px !important; display: block !important;">
-  <%= link_to "서비스 소개", "#", style: "text-decoration: none !important; color: #666 !important; font-size: 14px !important; margin: 0 10px !important; display: inline-block !important;" %>
-  <span style="color: #ccc !important; display: inline-block !important;">|</span>
-  <%= link_to "개인정보처리방침", "#", style: "text-decoration: none !important; color: #666 !important; font-size: 14px !important; margin: 0 10px !important; display: inline-block !important;" %>
+<div id="infoModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+  <div style="background-color: white; margin: 10% auto; padding: 20px; border-radius: 10px; width: 80%; max-width: 600px; max-height: 70vh; overflow-y: auto; position: relative;">
+    <span onclick="closeModal()" style="position: absolute; right: 20px; top: 10px; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+    <h2 id="modalTitle" style="color: #2D5A27; border-bottom: 2px solid #A8D5BA; padding-bottom: 10px;"></h2>
+    <div id="modalContent" style="margin-top: 20px; line-height: 1.6; color: #444; text-align: left; font-size: 14px;">
+      </div>
+  </div>
 </div>
 
-<p style="color: #999 !important; font-size: 12px !important; margin: 0 !important; display: block !important;">
-  © 2026 AI 기상-건강 통합 분석 시스템. All rights reserved.
-</p>
-</div> </footer>
+<script>
+  const contentData = {
+    service: {
+      title: "서비스 소개",
+      body: "oneclipai.info는 AI를 활용하여 기상 정보와 건강 데이터를 통합 분석하는 전문 대시보드입니다. 실시간 날씨에 따른 최적의 건강 가이드를 제공합니다."
+    },
+    privacy: {
+      title: "개인정보처리방침",
+      body: "본 서비스는 사용자가 입력한 도시 정보 외에 어떠한 개인정보도 수집하거나 저장하지 않습니다. 애드센스 광고 배치를 위해 쿠키가 사용될 수 있습니다."
+    }
+  };
+
+  function showModal(type) {
+    document.getElementById('modalTitle').innerText = contentData[type].title;
+    document.getElementById('modalContent').innerText = contentData[type].body;
+    document.getElementById('infoModal').style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById('infoModal').style.display = "none";
+  }
+
+  // 배경 클릭 시 닫기
+  window.onclick = function(event) {
+    if (event.target == document.getElementById('infoModal')) {
+      closeModal();
+    }
+  }
+</script>
     
   <% end %>
 </div>
