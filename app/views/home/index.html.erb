@@ -60,27 +60,40 @@
         </div>
       <% end %>
     </section>
- <footer style="clear: both; width: 100%; margin-top: 60px; padding: 30px 0; border-top: 1px solid #eee; background-color: #f9f9f9; text-align: center;">
-  <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-    <div style="margin-bottom: 10px;">
-      <a href="javascript:void(0);" onclick="showModal('service')" style="text-decoration: none; color: #666; font-size: 14px; margin: 0 10px;">서비스 소개</a>
-      <span style="color: #ccc;">|</span>
-      <a href="javascript:void(0);" onclick="showModal('privacy')" style="text-decoration: none; color: #666; font-size: 14px; margin: 0 10px;">개인정보처리방침</a>
-    </div>
-    <p style="color: #999; font-size: 12px; margin: 0;">© 2026 oneclipai.info. All rights reserved.</p>
+ <footer style="clear: both !important; width: 100% !important; margin-top: 80px !important; padding: 40px 0 !important; border-top: 1px solid #eee !important; text-align: center !important;">
+  <div style="display: inline-block !important;">
+    <a href="javascript:void(0);" onclick="showModal('service')" style="text-decoration: none; color: #666; font-size: 14px; margin: 0 10px;">서비스 소개</a>
+    <span style="color: #ccc;">|</span>
+    <a href="javascript:void(0);" onclick="showModal('privacy')" style="text-decoration: none; color: #666; font-size: 14px; margin: 0 10px;">개인정보처리방침</a>
   </div>
+  <p style="color: #999; font-size: 12px; margin-top: 10px;">© 2026 oneclipai.info. All rights reserved.</p>
 </footer>
 
-<div id="infoModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
-  <div style="background-color: white; margin: 10% auto; padding: 20px; border-radius: 10px; width: 80%; max-width: 600px; max-height: 70vh; overflow-y: auto; position: relative;">
+<div id="infoModal" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6);">
+  <div style="background-color: #fff; margin: 10% auto; padding: 30px; border-radius: 15px; width: 85%; max-width: 600px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); position: relative;">
     <span onclick="closeModal()" style="position: absolute; right: 20px; top: 10px; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
-    <h2 id="modalTitle" style="color: #2D5A27; border-bottom: 2px solid #A8D5BA; padding-bottom: 10px;"></h2>
-    <div id="modalContent" style="margin-top: 20px; line-height: 1.6; color: #444; text-align: left; font-size: 14px;">
-      </div>
+    <h2 id="modalTitle" style="color: #2D5A27; margin-top: 0;"></h2>
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+    <div id="modalContent" style="line-height: 1.8; color: #333; text-align: left; font-size: 15px;"></div>
   </div>
 </div>
 
 <script>
+  const infoData = {
+    service: { title: "서비스 소개", body: "oneclipai.info는 AI 기반 기상-건강 통합 분석 대시보드입니다. 실시간 데이터로 건강한 일상을 돕습니다." },
+    privacy: { title: "개인정보처리방침", body: "본 서비스는 입력하신 도시 정보 외의 개인정보를 수집하지 않습니다. 애드센스 광고를 위해 쿠키를 활용할 수 있습니다." }
+  };
+
+  function showModal(type) {
+    document.getElementById('modalTitle').innerText = infoData[type].title;
+    document.getElementById('modalContent').innerText = infoData[type].body;
+    document.getElementById('infoModal').style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById('infoModal').style.display = "none";
+  }
+</script>
   const contentData = {
     service: {
       title: "서비스 소개",
