@@ -60,15 +60,14 @@
         </div>
       <% end %>
     </section>
-
-    <footer style="margin-top: 40px; text-align: center; padding-bottom: 40px;">
-      <div style="display: inline-flex; align-items: center; background: #ecfdf5; color: #059669; padding: 12px 24px; border-radius: 50px; font-weight: bold; font-size: 0.95rem;">
-        <span style="margin-right: 8px;">✅</span> AI 분석 시스템 정상 가동 중
-      </div>
-      <p style="margin-top: 15px; color: #94a3b8; font-size: 0.85rem;">
-        마지막 업데이트: <%= @weather.created_at.strftime("%Y년 %m월 %d일 %H:%M") %> | 데이터 소스: OpenWeather Global API
-      </p>
-    </footer>
+  <footer style="margin-top: 50px; padding: 20px; border-top: 1px solid #eee; text-align: center;">
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+    <%= link_to "서비스 소개", "#", style: "text-decoration: none; color: #666; font-size: 14px;" %>
+    <%= link_to "개인정보처리방침", "#", style: "text-decoration: none; color: #666; font-size: 14px;" %>
+    <p style="color: #999; font-size: 12px; margin-top: 10px;">© 2026 AI 기상-건강 통합 분석 시스템. All rights reserved.</p>
+  </div>
+</footer>
+    
   <% end %>
 </div>
 <hr style="border: 0; height: 1px; background: #e2e8f0; margin: 60px 0 40px;">
