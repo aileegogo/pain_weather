@@ -1,6 +1,9 @@
 class HomeController < ApplicationController
   def index
     # 1. 검색어 확인 (기본값: 동탄시)
+    # [1] 기존 데이터가 남지 않도록 도화지를 깨끗이 지우는 코드 (추가)
+  @weather_data = nil 
+  @error_message = nil
     @city_ko = params[:city].presence || "동탄시"
     
     # 2. 전국 주요 도시 매핑
