@@ -1,119 +1,121 @@
 <style>
-  /* 1. 안티그래비티 디자인 시스템: 그림 같은 배경과 색감 */
-  :root {
-    --primary: #2D5A27;
-    --accent: #A8D5BA;
-    --glass: rgba(255, 255, 255, 0.85);
-    --shadow: 0 20px 60px rgba(45, 90, 39, 0.1);
-  }
-
+  /* 1. 사용자님이 직접 설계하신 '그림 같은' 입체적 레이아웃 */
   body {
-    background: radial-gradient(circle at top left, #f0fdf4, #ffffff 70%);
+    background: radial-gradient(circle at 0% 0%, #f7fcf9 0%, #ffffff 100%);
     font-family: 'Pretendard', sans-serif;
-    color: #333; margin: 0; min-height: 100vh;
+    margin: 0; padding: 0; color: #333;
   }
 
-  .main-wrapper {
-    max-width: 1100px; margin: 0 auto; padding: 60px 20px;
-    display: flex; flex-direction: column;
+  .container {
+    max-width: 1200px; margin: 0 auto; padding: 50px 20px;
+    display: flex; flex-direction: column; min-height: 100vh;
   }
 
-  /* 2. 공중에 떠 있는 듯한(Anti-Gravity) 카드 디자인 */
-  .card-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px; margin-bottom: 50px;
+  /* 2. 상단: AI 기상-건강 통합분석시스템 (웅장한 타이틀) */
+  header { text-align: center; margin-bottom: 70px; }
+  header h1 { font-size: 40px; color: #2D5A27; font-weight: 900; letter-spacing: -2px; }
+  .title-line { width: 100px; height: 6px; background: #A8D5BA; margin: 20px auto; border-radius: 10px; }
+
+  /* 3. 중간: 데이터 시각화 섹션 (그림 같은 오른쪽 디자인의 핵심) */
+  .dashboard-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px; margin-bottom: 60px;
   }
 
-  .glass-card {
-    background: var(--glass); backdrop-filter: blur(15px);
-    padding: 40px; border-radius: 35px; border: 1px solid rgba(168, 213, 186, 0.3);
-    box-shadow: var(--shadow); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    text-align: center;
+  .data-card {
+    background: #ffffff; padding: 45px; border-radius: 40px;
+    box-shadow: 0 25px 55px rgba(45, 90, 39, 0.08);
+    border: 1px solid rgba(168, 213, 186, 0.3);
+    text-align: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
-  .glass-card:hover { transform: translateY(-10px); box-shadow: 0 30px 80px rgba(45, 90, 39, 0.15); }
+  .data-card:hover { transform: translateY(-15px); box-shadow: 0 40px 90px rgba(45, 90, 39, 0.12); }
 
-  .stat-val { font-size: 42px; font-weight: 900; color: var(--primary); letter-spacing: -1px; }
-  .stat-unit { font-size: 18px; color: var(--accent); margin-left: 2px; }
+  .label { font-size: 14px; color: #888; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; }
+  .value { font-size: 50px; font-weight: 950; color: #2D5A27; letter-spacing: -2px; }
+  .unit { font-size: 20px; color: #A8D5BA; margin-left: 5px; }
 
-  /* 3. 건강 블로그 기사 영역: 애드센스 승인의 핵심 디자인 */
+  /* 4. 하단: AI 건강 분석 리포트 (실시간 블로그 기사 영역) */
   .article-container {
-    background: white; padding: 50px; border-radius: 40px;
-    box-shadow: 0 30px 100px rgba(0,0,0,0.03); border: 1px solid #f0f5f1;
+    background: white; padding: 60px; border-radius: 50px;
+    box-shadow: 0 30px 100px rgba(0,0,0,0.04); border: 1px solid #f0f7f2;
   }
 
-  .article-header {
-    font-size: 26px; font-weight: 800; color: var(--primary);
-    margin-bottom: 30px; line-height: 1.4;
+  .article-title {
+    font-size: 30px; font-weight: 850; color: #2D5A27;
+    margin-bottom: 35px; border-left: 10px solid #A8D5BA; padding-left: 30px;
   }
 
-  /* 4. 절대 우측으로 붙지 않는 하단 푸터 (완벽 격리) */
+  .article-body { line-height: 2.1; font-size: 18px; color: #4a4a4a; text-align: justify; }
+
+  /* 5. 푸터: 모바일 최적화 및 위치 고정 (우측 쏠림 방지) */
   footer {
-    clear: both !important; width: 100% !important;
-    margin-top: 100px !important; padding: 60px 0 !important;
-    border-top: 1px solid #eee !important; text-align: center !important;
+    clear: both !important; display: block !important; width: 100% !important;
+    margin-top: auto !important; padding: 60px 0 !important;
+    border-top: 1px solid #f0f0f0 !important; text-align: center !important;
   }
 
-  @media (max-width: 600px) {
-    .card-grid { grid-template-columns: 1fr; }
-    .main-wrapper { padding: 30px 15px; }
-    .article-container { padding: 30px; }
+  @media (max-width: 800px) {
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .article-container { padding: 40px 25px; }
   }
 </style>
 
-<div class="main-wrapper">
-  <header style="text-align: center; margin-bottom: 80px;">
-    <h1 style="font-size: 42px; color: var(--primary); font-weight: 900; margin-bottom: 10px;">oneclipai.info</h1>
-    <div style="width: 60px; height: 6px; background: var(--accent); margin: 0 auto 20px; border-radius: 10px;"></div>
-    <p style="color: #666; font-size: 18px; font-weight: 500;">기상 데이터 기반 맞춤형 건강 큐레이션</p>
+<div class="container">
+  <header>
+    <h1>AI 기상-건강 통합분석시스템</h1>
+    <div class="title-line"></div>
+    <p style="color: #666; font-size: 20px; font-weight: 500;">oneclipai.info | 실시간 맞춤형 건강 리포트</p>
   </header>
 
-  <div class="card-grid">
-    <div class="glass-card">
-      <div style="font-size: 14px; color: #888; margin-bottom: 10px; font-weight: 600;">THERMOMETER</div>
-      <div class="stat-val"><%= @current_temp || "--" %><span class="stat-unit">°C</span></div>
+  <%# 입체적인 데이터 분석 카드 섹션 %>
+  <div class="dashboard-grid">
+    <div class="data-card">
+      <div class="label">Real-time Temp</div>
+      <div class="value"><%= @current_temp || "--" %><span class="unit">°C</span></div>
     </div>
-    <div class="glass-card">
-      <div style="font-size: 14px; color: #888; margin-bottom: 10px; font-weight: 600;">BAROMETER</div>
-      <div class="stat-val"><%= @current_pressure || "--" %><span class="stat-unit">hPa</span></div>
+    <div class="data-card">
+      <div class="label">Air Pressure</div>
+      <div class="value"><%= @current_pressure || "--" %><span class="unit">hPa</span></div>
     </div>
-    <div class="glass-card">
-      <div style="font-size: 14px; color: #888; margin-bottom: 10px; font-weight: 600;">HUMIDITY</div>
-      <div class="stat-val"><%= @current_humidity || "--" %><span class="stat-unit">%</span></div>
+    <div class="data-card">
+      <div class="label">Humidity Level</div>
+      <div class="value"><%= @current_humidity || "--" %><span class="unit">%</span></div>
     </div>
   </div>
 
+  <%# 핵심 건강 분석 리포트 섹션 %>
   <div class="article-container">
-    <div class="article-header">
-      🌿 AI 실시간 분석: <span style="color: var(--accent);"><%= @city_name || "춘천" %></span> 지역 건강 리포트
+    <div class="article-title">
+      🌿 <%= @city_name || "춘천" %> 지역 AI 정밀 건강 리포트
     </div>
-    <div id="content-body" style="line-height: 2.0; font-size: 16px; color: #444; text-align: justify;">
-      <%= raw @health_article || "현재 기상 데이터를 바탕으로 고퀄리티 건강 기사를 생성하고 있습니다..." %>
+    <div class="article-body">
+      <%= raw @health_article || "현재 기상 데이터를 기반으로 전문적인 건강 콘텐츠를 생성하고 있습니다. 잠시만 기다려주세요." %>
     </div>
   </div>
 
   <footer>
-    <div style="margin-bottom: 25px;">
-      <a href="javascript:void(0);" onclick="showModal('service')" style="text-decoration: none; color: var(--primary); font-size: 14px; margin: 0 15px; font-weight: 600;">서비스 소개</a>
-      <span style="color: #ddd;">|</span>
-      <a href="javascript:void(0);" onclick="showModal('privacy')" style="text-decoration: none; color: var(--primary); font-size: 14px; margin: 0 15px; font-weight: 600;">개인정보처리방침</a>
+    <div style="margin-bottom: 30px;">
+      <a href="javascript:void(0);" onclick="showModal('service')" style="text-decoration: none; color: #2D5A27; font-size: 15px; margin: 0 20px; font-weight: 600;">서비스 소개</a>
+      <span style="color: #eee;">|</span>
+      <a href="javascript:void(0);" onclick="showModal('privacy')" style="text-decoration: none; color: #2D5A27; font-size: 15px; margin: 0 20px; font-weight: 600;">개인정보처리방침</a>
     </div>
-    <p style="color: #aaa; font-size: 11px;">© 2026 oneclipai.info. All rights reserved.</p>
+    <p style="color: #bbb; font-size: 12px; letter-spacing: 1px;">© 2026 oneclipai.info. All rights reserved.</p>
   </footer>
 </div>
 
-<%# 모달 구조 완벽 복원 %>
+<%# 팝업 모달 소스 %>
 <div id="infoModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.4); backdrop-filter:blur(10px);">
-  <div style="background:white; margin:10% auto; padding:40px; border-radius:35px; width:85%; max-width:500px; box-shadow:0 30px 80px rgba(0,0,0,0.3);">
-    <span onclick="closeModal()" style="float:right; cursor:pointer; font-size:30px; color:#ccc;">&times;</span>
-    <h2 id="modalTitle" style="color:var(--primary); margin-top:0; border-bottom:3px solid var(--accent); padding-bottom:15px; font-weight:800;"></h2>
-    <div id="modalContent" style="margin-top:30px; line-height:1.9; color:#555; font-size:15px;"></div>
+  <div style="background:white; margin:12% auto; padding:45px; border-radius:40px; width:85%; max-width:550px; box-shadow:0 30px 100px rgba(0,0,0,0.3);">
+    <span onclick="closeModal()" style="float:right; cursor:pointer; font-size:32px; color:#ccc;">&times;</span>
+    <h2 id="modalTitle" style="color:#2D5A27; margin-top:0; font-weight:800; border-bottom:3px solid #A8D5BA; padding-bottom:15px;"></h2>
+    <div id="modalContent" style="margin-top:30px; line-height:2.0; color:#444; font-size:16px;"></div>
   </div>
 </div>
 
 <script>
   function showModal(t){
-    const d={service:{title:"서비스 소개",body:"oneclipai.info는 AI 기상 분석을 통해 건강 가이드를 제공하는 프리미엄 대시보드입니다."},privacy:{title:"개인정보처리방침",body:"본 서비스는 어떠한 개인정보도 무단 수집하지 않음을 약속드립니다."}};
+    const d={service:{title:"서비스 소개",body:"AI 기상 분석을 통해 맞춤 건강 가이드를 제공하는 프리미엄 대시보드입니다."},privacy:{title:"개인정보처리방침",body:"본 서비스는 개인정보 보호법을 준수합니다."}};
     document.getElementById('modalTitle').innerText=d[t].title;
     document.getElementById('modalContent').innerText=d[t].body;
     document.getElementById('infoModal').style.display="block";
