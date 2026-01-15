@@ -1,78 +1,42 @@
-<div class="dashboard-wrapper" style="max-width: 800px; margin: 0 auto; padding: 20px; font-family: 'Pretendard', sans-serif; background-color: #f8fafc; min-height: 100vh;">
+<div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: 'Pretendard', sans-serif;">
+  <h1 style="text-align: center; color: #0f172a;">🌤️ AI 기상-건강 대시보드</h1>
   
-  <header style="text-align: center; margin-bottom: 30px;">
-    <h1 style="color: #0f172a; font-size: 1.8rem; margin-bottom: 5px;">🌤️ AI 기상-건강 통합 대시보드</h1>
-    <p style="color: #64748b; font-size: 0.95rem;">지역: <strong style="color: #10b981;"><%= @city_ko %></strong></p>
-  </header>
-
-  <section style="margin-bottom: 30px;">
-    <form action="/" method="get" style="display: flex; gap: 10px; background: white; padding: 15px; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
-      <input type="text" name="city" placeholder="도시명 입력" value="<%= @city_ko %>" style="flex: 1; padding: 12px 20px; border-radius: 12px; border: 1px solid #e2e8f0; outline: none;">
-      <button type="submit" style="padding: 0 25px; border-radius: 12px; border: none; background-color: #10b981; color: white; font-weight: bold; cursor: pointer;">분석</button>
-    </form>
-  </section>
+  <form action="/" method="get" style="display: flex; gap: 10px; margin-bottom: 20px;">
+    <input type="text" name="city" placeholder="도시명 입력" value="<%= @city_ko %>" style="flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
+    <button type="submit" style="padding: 10px 20px; background: #10b981; color: white; border: none; border-radius: 10px; cursor: pointer;">분석</button>
+  </form>
 
   <% if @weather %>
-    <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px;">
-      <div style="background: white; padding: 25px; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border-left: 8px solid <%= @weather.temp_color %>;">
-        <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 5px;">현재 기온</p>
-        <div style="display: flex; align-items: baseline; gap: 8px;">
-          <h2 style="font-size: 3.5rem; color: #1e293b; margin: 0;"><%= @weather.temp %></h2>
-          <span style="font-size: 1.5rem; color: #64748b;">°C</span>
-        </div>
-        <p style="margin-top: 10px; font-size: 1.1rem; color: <%= @weather.temp_color %>; font-weight: 800;"><%= @weather.temp_alert %></p>
-      </div>
+    <div style="background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 8px solid <%= @weather.temp_color %>; margin-bottom: 15px;">
+      <p style="color: #64748b; margin: 0;">현재 기온</p>
+      <h2 style="font-size: 3rem; margin: 5px 0;"><%= @weather.temp %>°C</h2>
+      <p style="color: <%= @weather.temp_color %>; font-weight: bold;"><%= @weather.temp_alert %></p>
+    </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-        <div style="background: white; padding: 20px; border-radius: 20px; border-left: 6px solid <%= @weather.humi_color %>;">
-          <p style="color: #64748b; font-size: 0.85rem;">습도: <%= @weather.humidity %>%</p>
-          <p style="font-size: 0.85rem; color: <%= @weather.humi_color %>; font-weight: 700;"><%= @weather.humi_alert %></p>
-        </div>
-        <div style="background: white; padding: 20px; border-radius: 20px; border-left: 6px solid #94a3b8;">
-          <p style="color: #64748b; font-size: 0.85rem;">기압: <%= @weather.pressure %>hPa</p>
-          <p style="font-size: 0.85rem; color: #94a3b8;">표준기압 기준</p>
-        </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+      <div style="background: white; padding: 15px; border-radius: 15px; border-left: 5px solid <%= @weather.humi_color %>;">
+        <p style="font-size: 0.8rem; color: #64748b;">습도: <%= @weather.humidity %>%</p>
+        <p style="font-size: 0.8rem; color: <%= @weather.humi_color %>; font-weight: bold;"><%= @weather.humi_alert %></p>
+      </div>
+      <div style="background: white; padding: 15px; border-radius: 15px; border-left: 5px solid #94a3b8;">
+        <p style="font-size: 0.8rem; color: #64748b;">기압: 1013hPa</p>
+        <p style="font-size: 0.8rem; color: #94a3b8;">표준기압</p>
       </div>
     </div>
 
-    <section style="background: white; padding: 25px; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
-      <h3 style="color: #0f172a; margin-top: 0; margin-bottom: 15px; font-size: 1.2rem;">🧠 AI 건강 리포트</h3>
-      <div id="report-text" style="line-height: 1.8; color: #334155; font-size: 1.05rem; background: #f1f5f9; padding: 25px; border-radius: 12px; white-space: pre-wrap;">
-        <%= @weather.ai_content %>
-      </div>
-      <button onclick="copyToBlog()" style="margin-top: 15px; width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;">본문 복사</button>
-    </section>
+    <div style="background: #f1f5f9; padding: 20px; border-radius: 15px;">
+      <h3 style="margin-top: 0;">🧠 AI 건강 리포트</h3>
+      <div id="report-text" style="white-space: pre-wrap; line-height: 1.6; color: #334155;"><%= @weather.ai_content %></div>
+      <button onclick="copyReport()" style="width: 100%; margin-top: 15px; padding: 10px; background: #10b981; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">본문 내용 복사</button>
+    </div>
   <% else %>
-    <p style="text-align: center; color: #ef4444;">데이터를 불러오는 데 실패했습니다. 도시명을 확인해 주세요.</p>
+    <p style="text-align: center; color: #ef4444;">날씨 데이터를 가져올 수 없습니다. 도시명을 확인해 주세요.</p>
   <% end %>
-
-  <footer style="margin-top: 40px; padding: 20px 0; text-align: center; border-top: 1px solid #e2e8f0;">
-    <a href="javascript:void(0);" onclick="openM('about')" style="color: #64748b; font-size: 0.8rem; margin: 0 10px; text-decoration: none;">서비스 소개</a>
-    <a href="javascript:void(0);" onclick="openM('privacy')" style="color: #64748b; font-size: 0.8rem; margin: 0 10px; text-decoration: none;">개인정보처리방침</a>
-  </footer>
-</div>
-
-<div id="m-box" style="display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
-  <div style="background: #fff; margin: 15% auto; padding: 30px; border-radius: 20px; width: 80%; max-width: 400px; position: relative;">
-    <span onclick="closeM()" style="position: absolute; right: 20px; top: 10px; font-size: 20px; cursor: pointer;">&times;</span>
-    <h3 id="m-title"></h3>
-    <p id="m-body" style="white-space: pre-wrap; font-size: 0.9rem; line-height: 1.6;"></p>
-  </div>
 </div>
 
 <script>
-  function copyToBlog() {
-    const t = document.getElementById('report-text').innerText;
-    navigator.clipboard.writeText(t).then(() => alert("복사되었습니다!"));
+  function copyReport() {
+    const text = document.getElementById('report-text').innerText;
+    navigator.clipboard.writeText(text).then(() => alert("리포트가 복사되었습니다!"));
   }
-  const mD = {
-    about: { t: "서비스 소개", b: "기상청 데이터를 활용한 AI 건강 분석 대시보드입니다." },
-    privacy: { t: "개인정보처리방침", b: "사용자 검색 데이터를 저장하지 않습니다." }
-  };
-  function openM(type) {
-    document.getElementById('m-title').innerText = mD[type].t;
-    document.getElementById('m-body').innerText = mD[type].b;
-    document.getElementById('m-box').style.display = "block";
-  }
-  function closeM() { document.getElementById('m-box').style.display = "none"; }
 </script>
