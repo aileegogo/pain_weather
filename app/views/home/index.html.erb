@@ -1,7 +1,7 @@
 <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: 'Pretendard', -apple-system, sans-serif; min-height: 100vh; display: flex; flex-direction: column;">
   
   <div style="flex: 1;">
-    <h1 style="text-align: center; color: #1e293b; margin-bottom: 25px; font-size: 1.6rem;">🌤️ AI 기상-건강 대시보</h1>
+    <h1 style="text-align: center; color: #1e293b; margin-bottom: 25px; font-size: 1.6rem;">🌤️ AI 기상-건강 대시보드</h1>
     
     <form action="/" method="get" style="display: flex; gap: 8px; margin-bottom: 20px;">
       <input type="text" name="city" placeholder="도시명 입력" value="<%= @city_ko %>" style="flex: 1; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; outline: none;">
@@ -49,11 +49,27 @@
   </footer>
 </div>
 
+<div id="infoModal" style="display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
+  <div style="background: white; margin: 15% auto; padding: 25px; border-radius: 15px; width: 80%; max-width: 400px; position: relative;">
+    <span onclick="closeModal()" style="position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer;">&times;</span>
+    <h3 id="modalTitle" style="margin-top: 0;"></h3>
+    <p id="modalBody" style="white-space: pre-wrap; color: #475569; font-size: 0.9rem; line-height: 1.6;"></p>
+  </div>
+</div>
+
 <script>
   function copyReport() {
     const text = document.getElementById('report-text').innerText;
     navigator.clipboard.writeText(text).then(() => alert("리포트가 복사되었습니다!"));
   }
-  function openModal(type) { /* 모달 열기 로직 */ }
-  function closeModal() { /* 모달 닫기 로직 */ }
+  const modalData = {
+    intro: { title: "서비스 소개", body: "기상청 실시간 데이터를 기반으로 건강 가이드를 제공하는 AI 대시보드입니다." },
+    privacy: { title: "개인정보처리방침", body: "본 서비스는 사용자의 개인 정보를 저장하지 않습니다." }
+  };
+  function openModal(type) {
+    document.getElementById('modalTitle').innerText = modalData[type].title;
+    document.getElementById('modalBody').innerText = modalData[type].body;
+    document.getElementById('infoModal').style.display = "block";
+  }
+  function closeModal() { document.getElementById('infoModal').style.display = "none"; }
 </script>
