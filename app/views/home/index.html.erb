@@ -1,37 +1,52 @@
-<div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: 'Pretendard', sans-serif;">
-  <h1 style="text-align: center; color: #0f172a;">🌤️ AI 기상-건강 대시보드</h1>
+<div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: 'Pretendard', -apple-system, sans-serif; min-height: 100vh; display: flex; flex-direction: column;">
   
-  <form action="/" method="get" style="display: flex; gap: 10px; margin-bottom: 20px;">
-    <input type="text" name="city" placeholder="도시명 입력" value="<%= @city_ko %>" style="flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
-    <button type="submit" style="padding: 10px 20px; background: #10b981; color: white; border: none; border-radius: 10px; cursor: pointer;">분석</button>
-  </form>
+  <div style="flex: 1;">
+    <h1 style="text-align: center; color: #1e293b; margin-bottom: 25px; font-size: 1.6rem;">🌤️ AI 기상-건강 대시보</h1>
+    
+    <form action="/" method="get" style="display: flex; gap: 8px; margin-bottom: 20px;">
+      <input type="text" name="city" placeholder="도시명 입력" value="<%= @city_ko %>" style="flex: 1; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; outline: none;">
+      <button type="submit" style="padding: 10px 20px; background: #10b981; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold;">분석</button>
+    </form>
 
-  <% if @weather %>
-    <div style="background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 8px solid <%= @weather.temp_color %>; margin-bottom: 15px;">
-      <p style="color: #64748b; margin: 0;">현재 기온</p>
-      <h2 style="font-size: 3rem; margin: 5px 0;"><%= @weather.temp %>°C</h2>
-      <p style="color: <%= @weather.temp_color %>; font-weight: bold;"><%= @weather.temp_alert %></p>
-    </div>
-
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
-      <div style="background: white; padding: 15px; border-radius: 15px; border-left: 5px solid <%= @weather.humi_color %>;">
-        <p style="font-size: 0.8rem; color: #64748b;">습도: <%= @weather.humidity %>%</p>
-        <p style="font-size: 0.8rem; color: <%= @weather.humi_color %>; font-weight: bold;"><%= @weather.humi_alert %></p>
+    <% if @weather %>
+      <div style="background: white; padding: 25px; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border-left: 8px solid <%= @weather.temp_color %>; margin-bottom: 20px;">
+        <p style="color: #64748b; margin: 0; font-size: 0.9rem;">현재 기온</p>
+        <h2 style="font-size: 3rem; margin: 5px 0;"><%= @weather.temp %>°C</h2>
+        <p style="color: <%= @weather.temp_color %>; font-weight: bold;"><%= @weather.temp_alert %></p>
       </div>
-      <div style="background: white; padding: 15px; border-radius: 15px; border-left: 5px solid #94a3b8;">
-        <p style="font-size: 0.8rem; color: #64748b;">기압: 1013hPa</p>
-        <p style="font-size: 0.8rem; color: #94a3b8;">표준기압</p>
-      </div>
-    </div>
 
-    <div style="background: #f1f5f9; padding: 20px; border-radius: 15px;">
-      <h3 style="margin-top: 0;">🧠 AI 건강 리포트</h3>
-      <div id="report-text" style="white-space: pre-wrap; line-height: 1.6; color: #334155;"><%= @weather.ai_content %></div>
-      <button onclick="copyReport()" style="width: 100%; margin-top: 15px; padding: 10px; background: #10b981; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">본문 내용 복사</button>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+        <div style="background: white; padding: 15px; border-radius: 15px; border-left: 5px solid <%= @weather.humi_color %>; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+          <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 4px;">습도: <%= @weather.humidity %>%</p>
+          <p style="font-size: 0.85rem; color: <%= @weather.humi_color %>; font-weight: bold;"><%= @weather.humi_alert %></p>
+        </div>
+        <div style="background: white; padding: 15px; border-radius: 15px; border-left: 5px solid #94a3b8; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+          <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 4px;">기압: 1013hPa</p>
+          <p style="font-size: 0.85rem; color: #94a3b8; font-weight: bold;">표준기압</p>
+        </div>
+      </div>
+
+      <div style="background: #f8fafc; padding: 20px; border-radius: 15px; border: 1px solid #e2e8f0;">
+        <h3 style="margin-top: 0; font-size: 1.1rem; color: #334155;">🧠 AI 건강 리포트</h3>
+        <div id="report-text" style="white-space: pre-wrap; line-height: 1.8; color: #475569; font-size: 0.95rem;"><%= @weather.ai_content %></div>
+        <button onclick="copyReport()" style="width: 100%; margin-top: 15px; padding: 12px; background: #0f172a; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold;">리포트 내용 복사</button>
+      </div>
+    <% else %>
+      <p style="text-align: center; color: #ef4444; padding: 20px;">데이터를 불러올 수 없습니다.</p>
+    <% end %>
+  </div>
+
+  <footer style="margin-top: 40px; padding: 25px 0; border-top: 1px solid #e2e8f0; text-align: center; color: #94a3b8; font-size: 0.8rem;">
+    <div style="margin-bottom: 15px;">
+      <a href="javascript:void(0)" onclick="openModal('intro')" style="color: #64748b; text-decoration: none; margin: 0 10px;">서비스 소개</a>
+      <span style="color: #e2e8f0;">|</span>
+      <a href="javascript:void(0)" onclick="openModal('privacy')" style="color: #64748b; text-decoration: none; margin: 0 10px;">개인정보처리방침</a>
+      <span style="color: #e2e8f0;">|</span>
+      <a href="/ads.txt" style="color: #64748b; text-decoration: none; margin: 0 10px;">ads.txt</a>
     </div>
-  <% else %>
-    <p style="text-align: center; color: #ef4444;">날씨 데이터를 가져올 수 없습니다. 도시명을 확인해 주세요.</p>
-  <% end %>
+    <p style="line-height: 1.6;">본 서비스는 기상청 API 데이터를 실시간으로 가공하여 제공합니다.<br>
+    © 2026 OneClipAI. All rights reserved.</p>
+  </footer>
 </div>
 
 <script>
@@ -39,4 +54,6 @@
     const text = document.getElementById('report-text').innerText;
     navigator.clipboard.writeText(text).then(() => alert("리포트가 복사되었습니다!"));
   }
+  function openModal(type) { /* 모달 열기 로직 */ }
+  function closeModal() { /* 모달 닫기 로직 */ }
 </script>
